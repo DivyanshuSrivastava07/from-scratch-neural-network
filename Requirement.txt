@@ -1,0 +1,4 @@
+numpy
+matplotlib
+scikit-learn(dont know much but used to import MNIST dataset)
+jupyter (Experiment notebook)

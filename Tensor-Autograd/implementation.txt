@@ -1,0 +1,1 @@
+All Implementation are in Learning.ipynb in Manual-Autograd. 

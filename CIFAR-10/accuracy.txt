@@ -1,0 +1,18 @@
+\\Without augmentation
+Training Accuracy :40.748
+Training Accuracy :54.796
+Training Accuracy :59.55200000000001
+Training Accuracy :63.124
+Training Accuracy :66.01
+
+Testing Accuracy :66.182
+
+//With augmentation
+
+Training Accuracy :34.988
+Training Accuracy :45.23
+Training Accuracy :49.616
+Training Accuracy :51.992000000000004
+Training Accuracy :54.862
+
+Testing Accuracy :56.796

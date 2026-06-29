@@ -1,6 +1,6 @@
 import torch.nn as nn,torch
 import math
-class SelfAttention(nn.Module):
+class Multihead(nn.Module):
     def __init__(self,embedding_dim,heads):
         super().__init__()
         self.heads = heads

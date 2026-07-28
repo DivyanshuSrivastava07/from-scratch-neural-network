@@ -1,0 +1,16 @@
+GPT
+│
+├── Embedding
+│      └── weight
+│
+├── Block1
+│      ├── Attention
+│      │      ├── Wq
+│      │      ├── Wk
+│      │      └── Wv
+│      └── FFN
+│
+├── Block2
+│      ...
+│
+└── LM Head

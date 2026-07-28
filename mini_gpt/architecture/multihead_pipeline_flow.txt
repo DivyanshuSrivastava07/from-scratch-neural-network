@@ -1,0 +1,62 @@
+    Input
+    (B,S,E)
+      │
+      ▼
+    Linear
+    (B,S,3E)
+      │
+      ▼
+    Chunk
+    Q K V
+    (B,S,E)
+      │
+      ▼
+    View
+    (B,S,H,D)
+      │
+      ▼
+    Transpose
+    (B,H,S,D)
+      │
+      ▼
+    Attention
+    (B,H,S,D)
+      │
+      ▼
+    Transpose Back
+    (B,S,H,D)
+      │
+      ▼
+    View
+    (B,S,E)
+      │
+      ▼
+    Output Linear
+    (B,S,E)
+
+
+    Input Tokens
+      │
+Embedding
+      │
+Positional Encoding
+      │
+      ▼
+┌────────────────────────────┐
+│     Transformer Block      │
+│                            │
+│ LayerNorm                  │
+│     ↓                      │
+│ Multi-Head Attention        │
+│     ↓                      │
+│ Residual Add               │
+│     ↓                      │
+│ LayerNorm                  │
+│     ↓                      │
+│ Feed Forward Network       │
+│     ↓                      │
+│ Residual Add               │
+└────────────────────────────┘
+      │
+      ▼
+Next Transformer Block

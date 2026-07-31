@@ -1,6 +1,6 @@
 import torch.nn as nn,torch
 import math
-class Multihead(nn.Module):
+class MultiHead(nn.Module):
     def __init__(self,embedding_dim,heads,max_seq_len):
         super().__init__()
         self.heads = heads

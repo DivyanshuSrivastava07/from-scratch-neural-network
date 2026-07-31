@@ -2,10 +2,10 @@ import torch.nn as nn
 import torch
 import math
 class PositionalEncoding(nn.Module):
-    def __init__(self,embedding_dim=256,max_length=5000):
+    def __init__(self,embedding_dim=256,max_seq_length=5000):
         super().__init__()
-        pe = torch.zeros(max_length,embedding_dim)
-        position = torch.arange(max_length).unsqueeze(1)
+        pe = torch.zeros(max_seq_length,embedding_dim)
+        position = torch.arange(max_seq_length).unsqueeze(1)
         div_term = torch.exp(torch.arange(
             0,
             embedding_dim,

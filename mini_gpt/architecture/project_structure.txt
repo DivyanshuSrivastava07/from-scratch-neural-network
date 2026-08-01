@@ -1,0 +1,33 @@
+mini_gpt/
+│
+├── models/
+│   ├── __init__.py
+│   ├── embedding.py
+│   ├── positional_encoding.py
+│   ├── layer_norm.py
+│   ├── multihead.py
+│   ├── feedforward.py
+│   ├── transformer_block.py
+│   └── gpt.py
+│
+├── tokenizer/
+│   ├── __init__.py
+│   └── tokenizer.py
+│
+├── datasets/
+│   ├── __init__.py
+│   └── text_dataset.py
+│
+├── trainer/
+│   ├── __init__.py
+│   ├── trainer.py
+│   └── generation.py
+│
+├── utils/
+│   ├── __init__.py
+│   ├── seed.py
+│   └── checkpoint.py
+│
+├── train.py
+├── inference.py
+└── requirements.txt

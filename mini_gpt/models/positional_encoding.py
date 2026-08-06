@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch
 import math
 class PositionalEncoding(nn.Module):
-    def __init__(self,embedding_dim=256,max_seq_length=5000):
+    def __init__(self,embedding_dim:int,max_seq_length:int):
         super().__init__()
         pe = torch.zeros(max_seq_length,embedding_dim)
         position = torch.arange(max_seq_length).unsqueeze(1)
@@ -16,7 +16,7 @@ class PositionalEncoding(nn.Module):
         pe[:, 1::2] = torch.cos(position*div_term)
         pe.unsqueeze(0)
         self.register_buffer("pe",pe)
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
         x shape:
         (Batch, Sequence Length, Embedding Dimension)

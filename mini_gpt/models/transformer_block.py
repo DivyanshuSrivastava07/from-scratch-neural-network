@@ -1,23 +1,23 @@
-import torch.nn as nn
+import torch.nn as nn,torch
 from mini_gpt.models.layer_norm import LayerNorm
-from mini_gpt.models.multihead import MultiHead
+from mini_gpt.models.multihead import MultiHeadAttention
 from mini_gpt.models.feedforward import FeedForward
 class TransformerBlock(nn.Module):
     def __init__(
             self,
             embedding_dim,
             max_seq_len,
-            heads,
+            num_heads,
             hidden_dim
         ):
         super().__init__()
         self.norm1 = LayerNorm(embedding_dim)
-        self.attention = MultiHead(embedding_dim,heads,max_seq_len)
+        self.attention = MultiHeadAttention(embedding_dim,num_heads,max_seq_len)
         self.norm2 = LayerNorm(embedding_dim)
         self.ffn = FeedForward(embedding_dim,hidden_dim)
        
-    def forward(self,x):
+    def forward(self,x:torch.Tensor) -> torch.Tensor:
         x = x + self.attention(self.norm1(x))
-        x = x + self.ffn(self.norm2(x))
-        return x
+        return x + self.ffn(self.norm2(x))
+        
     

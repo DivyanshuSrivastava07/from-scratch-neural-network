@@ -1,13 +1,13 @@
 import torch.nn as nn
 import torch
 class Embedding(nn.Module):
-    def __init__(self,vocabulary=10000,embedding_dim=256):
+    def __init__(self,vocabulary_size:int,embedding_dim:int):
         super().__init__()
-        self.vocabulary = vocabulary
-        self.embedding_dim = embedding_dim
-        self.weights = nn.Parameter(
-            torch.randn(self.vocabulary,self.embedding_dim)
+        assert vocabulary_size > 0
+        assert embedding_dim > 0
+        self.weight = nn.Parameter(
+            torch.randn(vocabulary_size,embedding_dim)
         )
-    def forward(self,x):
-        output = self.weights[x]
-        return output
+    def forward(self,x : torch.Tensor) -> torch.Tensor:
+        return self.weights[x]
+        

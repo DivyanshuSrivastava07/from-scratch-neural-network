@@ -1,7 +1,7 @@
 import torch.nn as nn,torch
 import math
 class SelfAttention(nn.Module):
-    def __init__(self,embedding_dim,d_k=128):
+    def __init__(self,embedding_dim,d_k):
         super().__init__()
         self.d_k = d_k
         self.wq = nn.Linear(embedding_dim,d_k)
@@ -18,5 +18,5 @@ class SelfAttention(nn.Module):
         scores = (Q @ K.transpose(-2,-1))/math.sqrt(self.d_k)
         weights = torch.softmax(scores,dim=-1)
         self.attention = weights
-        output = weights @ V
-        return output
+        return weights @ V
+        

@@ -1,12 +1,14 @@
 import torch.nn as nn,torch
 import math
-class MultiHead(nn.Module):
-    def __init__(self,embedding_dim,heads,max_seq_len):
+class MultiHeadAttention(nn.Module):
+    def __init__(self,embedding_dim:int,num_heads:int,max_seq_len:int):
         super().__init__()
-        self.heads = heads
+        self.num_heads = num_heads
         self.embedding_dim = embedding_dim
-        self.head_dim = self.embedding_dim // self.heads
-        assert self.embedding_dim % self.heads == 0
+        self.head_dim = self.embedding_dim // self.num_heads
+        assert embedding_dim % num_heads == 0, (
+            "embedding_dim must be divisible by num_heads"
+        )
         self.qkv = nn.Linear(embedding_dim,3*embedding_dim)
         self.out = nn.Linear(
             embedding_dim,
@@ -26,9 +28,9 @@ class MultiHead(nn.Module):
         mask = self.mask[:S, :S]
         Q, K, V = qkv.chunk(3,dim=-1)
 
-        Q = Q.view(B,S,self.heads,self.head_dim).transpose(2,1)
-        K = K.view(B,S,self.heads,self.head_dim).transpose(2,1)
-        V = V.view(B,S,self.heads,self.head_dim).transpose(2,1)
+        Q = Q.view(B,S,self.num_heads,self.head_dim).transpose(2,1)
+        K = K.view(B,S,self.num_heads,self.head_dim).transpose(2,1)
+        V = V.view(B,S,self.num_heads,self.head_dim).transpose(2,1)
 
         scores = (Q @ K.transpose(-2,-1))/math.sqrt(self.head_dim)
         scores = scores.masked_fill(
@@ -37,8 +39,6 @@ class MultiHead(nn.Module):
         )
         weights = torch.softmax(scores,dim=-1)
 
-        # if(self.training):
-        #     self.attention = weights        #### Usually we only store attention weights when debugging or visualizing.
         weights = self.attn_dropout(weights)
 
         """During training, some attention probabilities are randomly zeroed out.
@@ -46,6 +46,6 @@ class MultiHead(nn.Module):
         improving generalization."""
         out = weights @ V
         out = out.transpose(2,1).contiguous().view(B,S,E)
-        out = self.out(out)
-        return out
+        return self.out(out)
+        
 

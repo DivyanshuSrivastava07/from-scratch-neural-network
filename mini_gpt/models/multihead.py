@@ -1,7 +1,7 @@
 import torch.nn as nn,torch
 import math
 class MultiHeadAttention(nn.Module):
-    def __init__(self,embedding_dim:int,num_heads:int,max_seq_len:int):
+    def __init__(self,embedding_dim:int,num_heads:int,max_seq_len:int,dropout:float = 0.0):
         super().__init__()
         self.num_heads = num_heads
         self.embedding_dim = embedding_dim
@@ -14,10 +14,11 @@ class MultiHeadAttention(nn.Module):
             embedding_dim,
             embedding_dim
         )
-        self.mask = self.register_buffer(
+        self.attn_dropout = nn.Dropout(dropout)
+        self.register_buffer(
             "mask",
             torch.tril(
-                torch.ones_like(
+                torch.ones(
                     max_seq_len,max_seq_len
                 )
             )

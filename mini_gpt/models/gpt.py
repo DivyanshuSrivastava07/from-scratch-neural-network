@@ -1,5 +1,8 @@
 import torch.nn as nn,torch
-import mini_gpt.models.embedding as embedding,mini_gpt.models.positional_encoding as positional_encoding,mini_gpt.models.layer_norm as layer_norm,multihead,mini_gpt.models.transformer_block as transformer_block
+import mini_gpt.models.embedding as embedding
+import mini_gpt.models.positional_encoding as positional_encoding
+import mini_gpt.models.layer_norm as layer_norm
+import mini_gpt.models.transformer_block as transformer_block
 class GPT(nn.Module):
     def __init__(
             self,

@@ -14,7 +14,7 @@ class PositionalEncoding(nn.Module):
         )*(-math.log(10000)/embedding_dim))
         pe[:, 0::2] = torch. sin(position*div_term)
         pe[:, 1::2] = torch.cos(position*div_term)
-        pe.unsqueeze(0)
+        pe = pe.unsqueeze(0)
         self.register_buffer("pe",pe)
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """

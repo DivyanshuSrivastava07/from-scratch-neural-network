@@ -5,7 +5,7 @@ class FeedForward(nn.Module):
         self.ffn = nn.Sequential(
             nn.Linear(embedding_dim,ffn_hidden_dim),
             nn.GELU(),
-            nn.Linear(4*embedding_dim,ffn_hidden_dim)
+            nn.Linear(ffn_hidden_dim,embedding_dim)
         )
     def forward(self,x: torch.Tensor) -> torch.Tensor:
         return self.ffn(x)

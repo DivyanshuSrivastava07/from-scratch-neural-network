@@ -20,7 +20,7 @@ class GPT(nn.Module):
 
         assert max_seq_len > 0
         self.embedding = embedding.Embedding(vocabulary_size,embedding_dim)
-        self.pos_encoding = positional_encoding.PositionalEncoding(embedding,max_seq_len)
+        self.pos_encoding = positional_encoding.PositionalEncoding(embedding_dim,max_seq_len)
         self.blocks = nn.ModuleList(
             [
                 transformer_block.TransformerBlock(

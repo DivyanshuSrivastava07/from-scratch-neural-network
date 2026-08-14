@@ -9,5 +9,6 @@ class Embedding(nn.Module):
             torch.randn(vocabulary_size,embedding_dim)
         )
     def forward(self,x : torch.Tensor) -> torch.Tensor:
+        x = x.long()
         return self.weights[x]
         

@@ -21,6 +21,7 @@ class GPT(nn.Module):
         assert max_seq_len > 0
         self.embedding = embedding.Embedding(vocabulary_size,embedding_dim)
         self.pos_encoding = positional_encoding.PositionalEncoding(embedding_dim,max_seq_len)
+        self.max_seq_len = max_seq_len
         self.blocks = nn.ModuleList(
             [
                 transformer_block.TransformerBlock(
@@ -41,4 +42,41 @@ class GPT(nn.Module):
             x = block(x)
         x = self.norm(x)
         return self.lm_head(x)
-       
+    @torch.no_grad()
+    def generate(self,text,tokenizer,max_new_tokens = 100):
+        self.eval()
+        tokens = tokenizer.encode(text)
+
+        input_ids = torch.tensor(
+            [tokens],
+            dtype=float,
+            device=next(self.parameters()).device
+        )
+        for _ in range(max_new_tokens):
+
+            # Keep only the context the model can handle
+            context = input_ids[:, -self.max_seq_len:]
+
+            # Forward pass
+            logits = self(context)
+
+            # We only need prediction for the LAST token
+            logits = logits[:, -1, :]
+
+            # Greedy decoding
+            next_token = torch.argmax(
+                logits,
+                dim=-1,
+                keepdim=True
+            )
+
+            # Append predicted token
+            input_ids = torch.cat(
+                [input_ids, next_token],
+                dim=1
+            )
+
+        # Token IDs → text
+        return tokenizer.decode(
+            input_ids[0].tolist()
+        )

@@ -22,7 +22,3 @@ class CharacterTokenizer:
     @property
     def vocab_size(self):
         return len(self.itos)
-ct = CharacterTokenizer("hellowret")
-
-l = ct.encode(s)
-print(ct.vocab_size)

@@ -43,7 +43,7 @@ class GPT(nn.Module):
         x = self.norm(x)
         return self.lm_head(x)
     @torch.no_grad()
-    def generate(self,text,tokenizer,max_new_tokens = 100):
+    def generate(self,text,tokenizer,temperature=0.8,max_new_tokens = 100):
         self.eval()
         tokens = tokenizer.encode(text)
 
@@ -64,11 +64,9 @@ class GPT(nn.Module):
             logits = logits[:, -1, :]
 
             # Greedy decoding
-            next_token = torch.argmax(
-                logits,
-                dim=-1,
-                keepdim=True
-            )
+            logits = logits / temperature
+            probs = torch.softmax(logits, dim=-1)
+            next_token = torch.multinomial(probs, num_samples=1)
 
             # Append predicted token
             input_ids = torch.cat(

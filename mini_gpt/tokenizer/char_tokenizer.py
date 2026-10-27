@@ -1,4 +1,3 @@
-s = "hello"
 class CharacterTokenizer:
     def __init__(self,corpus):
         self.stoi: dict = {}

@@ -2,6 +2,10 @@ from torch.utils.data import DataLoader
 from mini_gpt.models.gpt import GPT
 import torch.nn as nn, torch
 from mini_gpt.trainer.input_producer import train_dataset,tokenizer
+from pathlib import Path 
+
+CHECKPOINT_PATH = Path("mini_gpt/checkpoints/minigpt_v1.pt")
+
 def main():
     loader = DataLoader(
         train_dataset,
@@ -21,6 +25,16 @@ def main():
         max_seq_len=128,
         ffn_hidden_dim=1024
     ).to(device)
+
+    checkpoint = torch.load(
+        CHECKPOINT_PATH,
+        map_location=device,
+        weights_only=True,
+    )
+
+    model.load_state_dict(checkpoint["model_state_dict"])
+    model.eval()
+
     optimizer = torch.optim.Adam(
         model.parameters(),
         lr=3e-4
